@@ -2,6 +2,10 @@ from tkinter import *
 HEIGHT = 500
 WIDTH = 800
 window = Tk()
+instructions = Tk()
+instructions.title('How to play')
+w = Label(instructions, text="Control boat using arrows. ")
+w.pack()
 window.title("The Bubble Blaster Game (Охотник за пузырями)")
 c = Canvas(window, width=WIDTH, height=HEIGHT,bg='darkblue')
 c.pack()
@@ -12,6 +16,7 @@ MID_X = 400
 MID_Y = 250
 c.move(ship1, MID_X, MID_Y)
 c.move(ship2, MID_X, MID_Y)
+
 SHIP_SPD = 3
 def move_ship(event):
     if event.keysym == 'Up':
@@ -77,14 +82,22 @@ def collision():
 from time import sleep, time
 
 BUB_CHANCE = 30
+scorewindow = Tk()
+scorewindow.title('Scoreboard')
 print('Init completed, starting main loop')
 score = 0
+scorelabel = Label(scorewindow, fg="black", font = "Helvetica 32 bold")
+scorelabel.pack()
 while True:
     if randint(1, BUB_CHANCE) == 1:
         create_bubble()
     move_bubbles()
     clean_up_bubs()
     score += collision()
-    print(score)
+    scorestring = "Score: " + str(score)
+    #print(score)
     window.update()
     sleep(0.01)
+    scorelabel.config(text=scorestring)
+window.destroy()
+
